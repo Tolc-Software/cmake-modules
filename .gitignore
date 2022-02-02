@@ -9,6 +9,8 @@
 # Files
 !.gitignore
 !CMakeLists.txt
+!LICENSE
+!README.md
 
 # Directories
 !cmake
