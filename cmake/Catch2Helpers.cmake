@@ -3,6 +3,32 @@ include_guard()
 # Creates a test executable linked with a Catch2 main library (that is created
 # for you)
 
+macro(get_catch2)
+  # Define the supported set of keywords
+  set(prefix ARG)
+  set(singleValues VERSION)
+  set(multiValues)
+  # Process the arguments passed in
+  cmake_parse_arguments(${prefix} "${noValues}" "${singleValues}"
+                        "${multiValues}" ${ARGN})
+
+  if(NOT ARG_VERSION)
+    message(FATAL_ERROR "Must provide a VERSION.")
+  endif()
+
+
+  include(FetchContent)
+  FetchContent_Declare(
+    Catch2
+    GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+    GIT_TAG ${ARG_VERSION})
+  FetchContent_MakeAvailable(Catch2)
+
+  # These are needed to use create_catch2_test
+  set(Catch2_FOUND TRUE)
+  set(Catch2_INCLUDE_DIRS ${Catch2_SOURCE_DIR}/single_include)
+endmacro()
+
 # NOTE: Depends on find_package(Catch2) has been called before this function
 function(create_catch2_test)
   if(NOT Catch2_FOUND)
