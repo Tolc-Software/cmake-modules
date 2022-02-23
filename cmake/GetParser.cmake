@@ -1,9 +1,7 @@
 include_guard()
 
-# Downloads the Parser project either from source or as a prebuilt asset
-# If BUILD_FROM_SOURCE is set to true, then an ssh key is needed
-# Relies on the GithubHelpers.cmake module
-# ASSET_NAME will be the name of a release asset (e.g. Parser-Linux-main.tar.gz)
+# Downloads the Parser project as a prebuilt asset
+# VERSION has to be set (i.e. v0.2.0, latest, etc)
 # Variables exported:
 #   PARSER_LLVM_VERSION - version of llvm used
 #   parser_SOURCE_DIR - source directory of downloaded parser
@@ -28,6 +26,7 @@ function(get_parser)
     set(tag main)
   endif()
 
+  include(FetchContent)
   # On Windows you can't link a Debug build to a Release build,
   # therefore there are two binary versions available.
   # Need to distinguish between them.
@@ -35,6 +34,7 @@ function(get_parser)
   if(${CMAKE_HOST_SYSTEM_NAME} STREQUAL Windows)
     set(windows_config "-${CMAKE_BUILD_TYPE}")
   endif()
+
   # Download binary
   FetchContent_Declare(
     parser_entry
