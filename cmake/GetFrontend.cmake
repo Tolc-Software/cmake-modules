@@ -58,7 +58,7 @@ function(get_frontend)
   message(STATUS "Checking if ${lowercase_arg_name} needs to be downloaded...")
   FetchContent_Populate(${lowercase_arg_name}_entry)
 
-  set(${ARG_NAME}_ROOT ${${lowercase_arg_name}_SOURCE_DIR})
+  set(${ARG_NAME}_ROOT ${${lowercase_arg_name}_entry_SOURCE_DIR})
   find_package(${ARG_NAME} REQUIRED CONFIG PATHS ${${ARG_NAME}_ROOT} REQUIRED)
 
   # Export the variables
