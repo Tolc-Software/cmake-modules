@@ -44,7 +44,7 @@ function(get_frontend)
     set(windows_config "-${CMAKE_BUILD_TYPE}")
   endif()
 
-  string(TOLOWER ${ARG_NAME} ${lowercase_arg_name})
+  string(TOLOWER ${ARG_NAME} lowercase_arg_name)
   set(binary_name
       ${lowercase_arg_name}-${CMAKE_HOST_SYSTEM_NAME}-${tag}${windows_config}.tar.xz
   )
@@ -96,7 +96,7 @@ function(copy_frontend_docs)
   if(NOT ARG_COPY_TO)
     message(
       FATAL_ERROR
-        "COPY_TO not defined. Define it as the directory where to copy the documentation files, e.g. 'docs/packaging/docs/python'."
+        "COPY_TO not defined. Define it as the directory where to copy the documentation files, e.g. '${CMAKE_CURRENT_LIST_DIR}/docs/packaging/docs/python'."
     )
   endif()
 
