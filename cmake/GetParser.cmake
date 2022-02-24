@@ -21,11 +21,6 @@ function(get_parser)
       FATAL_ERROR "Must provide a version. i.e. get_parser(VERSION v0.2.0)")
   endif()
 
-  set(tag ${ARG_VERSION})
-  if(ARG_VERSION STREQUAL "latest")
-    set(tag main)
-  endif()
-
   include(FetchContent)
   # On Windows you can't link a Debug build to a Release build,
   # therefore there are two binary versions available.
@@ -38,7 +33,7 @@ function(get_parser)
   # Download binary
   FetchContent_Declare(
     parser_entry
-    URL https://github.com/Tolc-Software/Parser/releases/download/${ARG_VERSION}/Parser-${CMAKE_HOST_SYSTEM_NAME}-${tag}${windows_config}.tar.xz
+    URL https://github.com/Tolc-Software/Parser/releases/download/${ARG_VERSION}/Parser-${CMAKE_HOST_SYSTEM_NAME}${windows_config}.tar.xz
   )
 
   message(STATUS "Checking if Parser needs to be downloaded...")
