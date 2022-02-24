@@ -30,11 +30,6 @@ function(get_frontend)
     )
   endif()
 
-  set(tag ${ARG_VERSION})
-  if(ARG_VERSION STREQUAL "latest")
-    set(tag main)
-  endif()
-
   include(FetchContent)
   # On Windows you can't link a Debug build to a Release build,
   # therefore there are two binary versions available.
@@ -44,18 +39,18 @@ function(get_frontend)
     set(windows_config "-${CMAKE_BUILD_TYPE}")
   endif()
 
-  string(TOLOWER ${ARG_NAME} lowercase_arg_name)
   set(binary_name
-      ${lowercase_arg_name}-${CMAKE_HOST_SYSTEM_NAME}-${tag}${windows_config}.tar.xz
+    ${ARG_NAME}-${CMAKE_HOST_SYSTEM_NAME}${windows_config}.tar.xz
   )
 
   # Download binary
+  string(TOLOWER ${ARG_NAME} lowercase_arg_name)
   FetchContent_Declare(
     ${lowercase_arg_name}_entry
     URL https://github.com/Tolc-Software/${lowercase_arg_name}/releases/download/${ARG_VERSION}/${binary_name}
   )
 
-  message(STATUS "Checking if ${lowercase_arg_name} needs to be downloaded...")
+  message(STATUS "Checking if ${ARG_NAME} needs to be downloaded...")
   FetchContent_Populate(${lowercase_arg_name}_entry)
 
   set(${ARG_NAME}_ROOT ${${lowercase_arg_name}_entry_SOURCE_DIR})
