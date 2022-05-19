@@ -17,6 +17,10 @@ function(add_options)
     # NOTE: Also needed for static libraries
     # https://mropert.github.io/2018/02/02/pic_pie_sanitizers/
     target_compile_options(${ARG_TARGET} PRIVATE -fPIE)
+
+    # Visibility default to hidden.
+    # LLVM is built with this on MacOS so it produces irritating warnings without this
+    set_target_properties(${testName} PROPERTIES CXX_VISIBILITY_PRESET hidden)
   endif()
 endfunction()
 
