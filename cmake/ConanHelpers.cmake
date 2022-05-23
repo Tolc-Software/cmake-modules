@@ -46,7 +46,8 @@ function(get_conan_helper)
     file(DOWNLOAD "https://raw.githubusercontent.com/conan-io/cmake-conan/0.18.1/conan.cmake"
                   "${CMAKE_BINARY_DIR}/conan.cmake"
                   TLS_VERIFY ON)
-  include(${CMAKE_BINARY_DIR}/conan.cmake)
+    include(${CMAKE_BINARY_DIR}/conan.cmake)
+  endif()
 endfunction(get_conan_helper)
 
 function(conan_setup_remotes)
