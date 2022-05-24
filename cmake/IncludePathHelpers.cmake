@@ -54,17 +54,18 @@ function(get_system_include)
         PARENT_SCOPE)
     set(system_include
         "${ARG_LLVM_DIRECTORY}/lib/clang/${ARG_LLVM_VERSION}/include"
-	    "C:/Program Files (x86)/Microsoft Visual Studio/${version_placeholder}/Enterprise/VC/Tools/MSVC/${version_placeholder}/include"
-	    "C:/Program Files (x86)/Microsoft Visual Studio/${version_placeholder}/Professional/VC/Tools/MSVC/${version_placeholder}/include"
-	    "C:/Program Files (x86)/Microsoft Visual Studio/${version_placeholder}/Community/VC/Tools/MSVC/${version_placeholder}/include"
-	    "C:/Program Files/Microsoft Visual Studio/${version_placeholder}/Enterprise/VC/Tools/MSVC/${version_placeholder}/include"
-	    "C:/Program Files/Microsoft Visual Studio/${version_placeholder}/Professional/VC/Tools/MSVC/${version_placeholder}/include"
-	    "C:/Program Files/Microsoft Visual Studio/${version_placeholder}/Community/VC/Tools/MSVC/${version_placeholder}/include"
-	    "C:/Program Files (x86)/Windows Kits/${version_placeholder}/include/${version_placeholder}/ucrt"
-	    "C:/Program Files (x86)/Windows Kits/${version_placeholder}/include/${version_placeholder}/shared"
-	    "C:/Program Files (x86)/Windows Kits/${version_placeholder}/include/${version_placeholder}/um"
-	    "C:/Program Files (x86)/Windows Kits/${version_placeholder}/include/${version_placeholder}/winrt"
-	    "C:/Program Files (x86)/Windows Kits/${version_placeholder}/include/${version_placeholder}/cppwinrt")
+	"C:/Program Files (x86)/Microsoft Visual Studio/${version_placeholder}/Enterprise/VC/Tools/MSVC/${version_placeholder}/include"
+	"C:/Program Files (x86)/Microsoft Visual Studio/${version_placeholder}/Professional/VC/Tools/MSVC/${version_placeholder}/include"
+	"C:/Program Files (x86)/Microsoft Visual Studio/${version_placeholder}/Community/VC/Tools/MSVC/${version_placeholder}/include"
+	"C:/Program Files/Microsoft Visual Studio/${version_placeholder}/Enterprise/VC/Tools/MSVC/${version_placeholder}/include"
+	"C:/Program Files/Microsoft Visual Studio/${version_placeholder}/Professional/VC/Tools/MSVC/${version_placeholder}/include"
+	"C:/Program Files/Microsoft Visual Studio/${version_placeholder}/Community/VC/Tools/MSVC/${version_placeholder}/include"
+	"C:/BuildTools/VC/Tools/MSVC/${version_placeholder}/include"
+	"C:/Program Files (x86)/Windows Kits/${version_placeholder}/include/${version_placeholder}/ucrt"
+	"C:/Program Files (x86)/Windows Kits/${version_placeholder}/include/${version_placeholder}/shared"
+	"C:/Program Files (x86)/Windows Kits/${version_placeholder}/include/${version_placeholder}/um"
+	"C:/Program Files (x86)/Windows Kits/${version_placeholder}/include/${version_placeholder}/winrt"
+	"C:/Program Files (x86)/Windows Kits/${version_placeholder}/include/${version_placeholder}/cppwinrt")
   else()
     message(FATAL_ERROR "Unsupported platform for now.")
   endif()
