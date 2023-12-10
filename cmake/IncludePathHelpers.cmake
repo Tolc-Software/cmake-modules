@@ -27,6 +27,11 @@ function(get_system_include)
   if(NOT ARG_VARIABLE)
     message(FATAL_ERROR "VARIABLE must be set.")
   endif()
+  string(REGEX MATCH "^([0-9]+)\\.([0-9]+)\\.([0-9]+)"
+    LLVM_FULL_MATCH ${ARG_LLVM_VERSION})
+  set(ARG_LLVM_VERSION_MAJOR ${CMAKE_MATCH_1})
+  set(ARG_LLVM_VERSION_MINOR ${CMAKE_MATCH_2})
+  set(ARG_LLVM_VERSION_PATCH ${CMAKE_MATCH_3})
   # We are using the standard library shipped with the downloaded llvm (libc++) for include paths in the parsing
   # But we also need some platform specific code which cannot be assumed
   # You can find the include paths by typing: $ /path/to/llvm/imported/clang -v -x c++ -
@@ -37,13 +42,15 @@ function(get_system_include)
         "${ARG_LLVM_DIRECTORY}/include/c++/v1"
         "/usr/local/include"
         "${ARG_LLVM_DIRECTORY}/lib/clang/${ARG_LLVM_VERSION}/include"
+        "${ARG_LLVM_DIRECTORY}/lib/clang/${ARG_LLVM_VERSION_MAJOR}/include"
         "/usr/include"
-	"${ARG_LLVM_DIRECTORY}/include/x86_64-unknown-linux-gnu/c++/v1/")
-   elseif(${CMAKE_HOST_SYSTEM_NAME} STREQUAL Darwin)
-     set(system_include
+ "${ARG_LLVM_DIRECTORY}/include/x86_64-unknown-linux-gnu/c++/v1/")
+  elseif(${CMAKE_HOST_SYSTEM_NAME} STREQUAL Darwin)
+    set(system_include
          "${ARG_LLVM_DIRECTORY}/include/c++/v1"
          "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include"
          "${ARG_LLVM_DIRECTORY}/lib/clang/${ARG_LLVM_VERSION}/include"
+         "${ARG_LLVM_DIRECTORY}/lib/clang/${ARG_LLVM_VERSION_MAJOR}/include"
          "/usr/local/include"
          "/System/Library/Frameworks"
          "/Library/Frameworks")
@@ -54,18 +61,19 @@ function(get_system_include)
         PARENT_SCOPE)
     set(system_include
         "${ARG_LLVM_DIRECTORY}/lib/clang/${ARG_LLVM_VERSION}/include"
-	"C:/Program Files (x86)/Microsoft Visual Studio/${version_placeholder}/Enterprise/VC/Tools/MSVC/${version_placeholder}/include"
-	"C:/Program Files (x86)/Microsoft Visual Studio/${version_placeholder}/Professional/VC/Tools/MSVC/${version_placeholder}/include"
-	"C:/Program Files (x86)/Microsoft Visual Studio/${version_placeholder}/Community/VC/Tools/MSVC/${version_placeholder}/include"
-	"C:/Program Files/Microsoft Visual Studio/${version_placeholder}/Enterprise/VC/Tools/MSVC/${version_placeholder}/include"
-	"C:/Program Files/Microsoft Visual Studio/${version_placeholder}/Professional/VC/Tools/MSVC/${version_placeholder}/include"
-	"C:/Program Files/Microsoft Visual Studio/${version_placeholder}/Community/VC/Tools/MSVC/${version_placeholder}/include"
-	"C:/BuildTools/VC/Tools/MSVC/${version_placeholder}/include"
-	"C:/Program Files (x86)/Windows Kits/${version_placeholder}/include/${version_placeholder}/ucrt"
-	"C:/Program Files (x86)/Windows Kits/${version_placeholder}/include/${version_placeholder}/shared"
-	"C:/Program Files (x86)/Windows Kits/${version_placeholder}/include/${version_placeholder}/um"
-	"C:/Program Files (x86)/Windows Kits/${version_placeholder}/include/${version_placeholder}/winrt"
-	"C:/Program Files (x86)/Windows Kits/${version_placeholder}/include/${version_placeholder}/cppwinrt")
+        "${ARG_LLVM_DIRECTORY}/lib/clang/${ARG_LLVM_VERSION_MAJOR}/include"
+        "C:/Program Files (x86)/Microsoft Visual Studio/${version_placeholder}/Enterprise/VC/Tools/MSVC/${version_placeholder}/include"
+        "C:/Program Files (x86)/Microsoft Visual Studio/${version_placeholder}/Professional/VC/Tools/MSVC/${version_placeholder}/include"
+        "C:/Program Files (x86)/Microsoft Visual Studio/${version_placeholder}/Community/VC/Tools/MSVC/${version_placeholder}/include"
+        "C:/Program Files/Microsoft Visual Studio/${version_placeholder}/Enterprise/VC/Tools/MSVC/${version_placeholder}/include"
+        "C:/Program Files/Microsoft Visual Studio/${version_placeholder}/Professional/VC/Tools/MSVC/${version_placeholder}/include"
+        "C:/Program Files/Microsoft Visual Studio/${version_placeholder}/Community/VC/Tools/MSVC/${version_placeholder}/include"
+        "C:/BuildTools/VC/Tools/MSVC/${version_placeholder}/include"
+        "C:/Program Files (x86)/Windows Kits/${version_placeholder}/include/${version_placeholder}/ucrt"
+        "C:/Program Files (x86)/Windows Kits/${version_placeholder}/include/${version_placeholder}/shared"
+        "C:/Program Files (x86)/Windows Kits/${version_placeholder}/include/${version_placeholder}/um"
+        "C:/Program Files (x86)/Windows Kits/${version_placeholder}/include/${version_placeholder}/winrt"
+        "C:/Program Files (x86)/Windows Kits/${version_placeholder}/include/${version_placeholder}/cppwinrt")
   else()
     message(FATAL_ERROR "Unsupported platform for now.")
   endif()

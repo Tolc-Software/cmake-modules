@@ -17,9 +17,17 @@ function(_get_llvm_download_url)
         https://github.com/llvm/llvm-project/releases/download/llvmorg-${ARG_VERSION}/clang+llvm-${ARG_VERSION}-x86_64-linux-gnu-ubuntu-18.04.tar.xz
     )
   elseif(${CMAKE_HOST_SYSTEM_NAME} STREQUAL Darwin)
-    set(download_url
+    execute_process(COMMAND uname -m OUTPUT_VARIABLE architecture)
+    string(STRIP ${architecture} architecture)
+
+    if (${architecture} STREQUAL arm64)
+      set(download_url
+        https://github.com/llvm/llvm-project/releases/download/llvmorg-${ARG_VERSION}/clang+llvm-${ARG_VERSION}-arm64-apple-darwin22.0.tar.xz)
+    else()
+      set(download_url
         https://github.com/llvm/llvm-project/releases/download/llvmorg-${ARG_VERSION}/clang+llvm-${ARG_VERSION}-x86_64-apple-darwin.tar.xz
     )
+    endif()
   elseif(${CMAKE_HOST_SYSTEM_NAME} STREQUAL Windows)
     if(${CMAKE_BUILD_TYPE} STREQUAL Debug)
       set(download_url
