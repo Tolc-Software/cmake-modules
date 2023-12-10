@@ -50,22 +50,6 @@ function(get_conan_helper)
   include(${CMAKE_BINARY_DIR}/conan.cmake)
 endfunction(get_conan_helper)
 
-function(conan_setup_remotes)
-  # Avoid running this command often
-  if(_conan_has_set_remotes)
-    message(STATUS "Conan remotes already set.")
-    return()
-  endif()
-  # For clara
-  conan_add_remote(NAME bincrafters URL
-                   https://api.bintray.com/conan/bincrafters/public-conan)
-
-  set(_conan_has_set_remotes
-      TRUE
-      CACHE INTERNAL
-            "This is used to avoid setting the remotes twice. Only takes time.")
-endfunction()
-
 function(run_conan)
   # Define the supported set of keywords
   set(prefix ARG)
@@ -81,9 +65,6 @@ function(run_conan)
 
   # Require that conan is installed
   conan_check(REQUIRED)
-
-  # Add some useful remotes
-  conan_setup_remotes()
 
   # Install dependencies
   conan_cmake_run(
